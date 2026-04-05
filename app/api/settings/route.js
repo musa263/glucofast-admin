@@ -42,11 +42,24 @@ export async function GET() {
   return NextResponse.json({ settings });
 }
 
+// Only allow known top-level settings keys to prevent arbitrary data injection
+const ALLOWED_SETTINGS_KEYS = ['pricing', 'ai', 'app'];
+
 export async function PUT(req) {
   const admin = await verifyAdmin();
   if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { settings } = await req.json();
-  await adminDb.doc(SETTINGS_DOC).set(settings, { merge: true });
+  if (!settings || typeof settings !== 'object') {
+    return NextResponse.json({ error: 'Invalid settings object' }, { status: 400 });
+  }
+
+  // Filter to only allowed keys
+  const filtered = {};
+  for (const key of ALLOWED_SETTINGS_KEYS) {
+    if (key in settings) filtered[key] = settings[key];
+  }
+
+  await adminDb.doc(SETTINGS_DOC).set(filtered, { merge: true });
   return NextResponse.json({ success: true });
 }

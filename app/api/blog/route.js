@@ -32,14 +32,24 @@ export async function POST(req) {
   return NextResponse.json({ success: true, id: ref.id });
 }
 
+// Allowed fields for blog post updates (prevent mass assignment)
+const ALLOWED_UPDATE_FIELDS = ['title', 'content', 'category', 'published'];
+
 export async function PUT(req) {
   const admin = await verifyAdmin();
   if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { id, ...updates } = await req.json();
+  const body = await req.json();
+  const { id } = body;
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
 
+  // Only allow whitelisted fields
+  const updates = {};
+  for (const key of ALLOWED_UPDATE_FIELDS) {
+    if (key in body) updates[key] = body[key];
+  }
   updates.updatedAt = new Date().toISOString();
+
   await adminDb.collection('blog_posts').doc(id).update(updates);
   return NextResponse.json({ success: true });
 }
