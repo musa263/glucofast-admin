@@ -1,5 +1,5 @@
-import DashboardLayout from '../dashboard/layout';
+import AdminLayout from '../components/AdminLayout';
 
 export default function UsersLayout({ children }) {
-  return <DashboardLayout>{children}</DashboardLayout>;
+  return <AdminLayout>{children}</AdminLayout>;
 }
