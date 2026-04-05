@@ -1,0 +1,75 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #080C0B;
+  --surface: #0F1413;
+  --card: #141C1A;
+  --border: rgba(255,255,255,0.06);
+  --text: #E8F5F0;
+  --text-dim: #8FA8A0;
+  --text-muted: #4A6360;
+  --accent: #3DFBB0;
+  --accent-dim: rgba(61,251,176,0.08);
+  --purple: #B07AFF;
+  --purple-dim: rgba(176,122,255,0.08);
+  --warn: #F5C96A;
+  --danger: #FF6B6B;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+input, textarea, select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+button:hover { opacity: 0.85; }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary { background: var(--accent); color: var(--bg); }
+.btn-purple { background: var(--purple); color: #fff; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.badge-green { background: var(--accent-dim); color: var(--accent); }
+.badge-red { background: rgba(255,107,107,0.1); color: var(--danger); }
+.badge-purple { background: var(--purple-dim); color: var(--purple); }
+
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 13px; }
+tr:hover { background: var(--surface); }
