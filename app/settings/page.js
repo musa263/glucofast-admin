@@ -27,7 +27,14 @@ export default function SettingsPage() {
         if (res.ok) {
           const data = await res.json();
           if (data.settings && Object.keys(data.settings).length > 0) {
-            setSettings({ ...DEFAULT_SETTINGS, ...data.settings });
+            const s = data.settings;
+            setSettings((prev) => ({
+              pricing: {
+                tiers: s.pricing?.tiers || prev.pricing.tiers,
+              },
+              ai: { ...prev.ai, ...s.ai },
+              app: { ...prev.app, ...s.app },
+            }));
           }
         }
       } catch {
